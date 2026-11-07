@@ -1,0 +1,37 @@
+{
+  "projectId": "spec-review-iphone15-pro",
+  "title": "Review Singkat Layar Gadget",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "theme": {
+    "primaryColor": "#3b82f6",
+    "accentColor": "#f59e0b",
+    "backgroundColor": "#09090b",
+    "fontFamily": "Inter, sans-serif",
+    "badgePosition": "bottom"
+  },
+  "scenes": [
+    {
+      "id": "scene-1",
+      "order": 1,
+      "media": {
+        "type": "image",
+        "localPath": "/uploads/sample_bodi.jpg",
+        "fit": "cover"
+      },
+      "text": {
+        "highlightSpec": "AMOLED 120Hz 2000 Nits",
+        "subtitle": "Layar AMOLED 120Hz dengan kecerahan maksimal 2000 nits sangat nyaman dilihat."
+      },
+      "audio": {
+        "voice": "id-ID-GadisNeural",
+        "audioPath": "/uploads/audio/test_gadis.mp3",
+        "durationInSeconds": 6.98,
+        "durationInFrames": 222
+      },
+      "transition": "fade"
+    }
+  ],
+  "totalDurationInFrames": 222
+}
