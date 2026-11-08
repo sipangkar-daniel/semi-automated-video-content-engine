@@ -14,9 +14,8 @@ export const SubtitleBar: React.FC<SubtitleBarProps> = ({
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // Smooth entrance
   const entrance = spring({
-    frame: frame - 4, // sedikit delay setelah spec card muncul
+    frame: frame - 3,
     fps,
     config: {
       damping: 15,
@@ -26,46 +25,45 @@ export const SubtitleBar: React.FC<SubtitleBarProps> = ({
   });
 
   const opacity = interpolate(entrance, [0, 1], [0, 1]);
-  const translateY = interpolate(entrance, [0, 1], [25, 0]);
+  const translateY = interpolate(entrance, [0, 1], [15, 0]);
 
   return (
     <div
       style={{
         position: "absolute",
-        left: 60,
-        right: 60,
-        bottom: 220, // Tepat di bawah spec card, di atas watermark/navigasi platform
+        left: 48,
+        right: 48,
+        bottom: 180, // Safe zone platform
         transform: `translateY(${translateY}px)`,
         opacity,
         display: "flex",
         justifyContent: "center",
         zIndex: 25,
+        pointerEvents: "none",
       }}
     >
       <div
         style={{
-          maxWidth: "92%",
-          padding: "16px 28px",
-          borderRadius: 16,
-          backgroundColor: "rgba(0, 0, 0, 0.65)",
-          backdropFilter: "blur(8px)",
-          border: "1px solid rgba(255, 255, 255, 0.08)",
+          maxWidth: "95%",
+          padding: "10px 20px",
+          borderRadius: 12,
+          backgroundColor: "rgba(0, 0, 0, 0.55)",
+          backdropFilter: "blur(4px)",
           textAlign: "center",
-          boxShadow: "0 8px 24px rgba(0, 0, 0, 0.4)",
         }}
       >
         <p
           style={{
             margin: 0,
-            fontSize: 32,
-            fontWeight: 600,
-            lineHeight: 1.4,
-            color: "#f1f5f9",
+            fontSize: 30,
+            fontWeight: 700,
+            lineHeight: 1.35,
+            color: "#f8fafc",
             fontFamily: theme?.fontFamily || "Inter, sans-serif",
-            letterSpacing: "0.01em",
+            textShadow: "0 2px 8px rgba(0, 0, 0, 0.9)",
           }}
         >
-          “{subtitle}”
+          {subtitle}
         </p>
       </div>
     </div>

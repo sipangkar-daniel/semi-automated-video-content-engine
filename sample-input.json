@@ -1,6 +1,6 @@
 {
   "projectId": "spec-review-iphone15-pro",
-  "title": "Review Singkat Layar Gadget",
+  "title": "Review Singkat iPhone 15 Pro",
   "fps": 30,
   "width": 1080,
   "height": 1920,
@@ -15,14 +15,21 @@
     {
       "id": "scene-1",
       "order": 1,
+      "role": "intro",
+      "layout": {
+        "textPosition": "top",
+        "mediaPresentation": "fullscreen"
+      },
       "media": {
         "type": "image",
         "localPath": "/uploads/sample_bodi.jpg",
-        "fit": "cover"
+        "fit": "cover",
+        "backgroundMode": "standalone"
       },
       "text": {
-        "highlightSpec": "AMOLED 120Hz 2000 Nits",
-        "subtitle": "Layar AMOLED 120Hz dengan kecerahan maksimal 2000 nits sangat nyaman dilihat."
+        "highlightSpec": "Review iPhone 15 Pro",
+        "subtitle": "Inilah smartphone flagship terbaru dengan material titanium super kokoh.",
+        "customBadge": "INTRODUCE"
       },
       "audio": {
         "voice": "id-ID-GadisNeural",
@@ -31,7 +38,33 @@
         "durationInFrames": 222
       },
       "transition": "fade"
+    },
+    {
+      "id": "scene-2",
+      "order": 2,
+      "role": "feature",
+      "layout": {
+        "textPosition": "bottom",
+        "mediaPresentation": "fullscreen"
+      },
+      "media": {
+        "type": "image",
+        "localPath": "",
+        "fit": "cover",
+        "backgroundMode": "inherit_previous"
+      },
+      "text": {
+        "highlightSpec": "Kamera Utama 48MP OIS",
+        "subtitle": "Kamera utamanya kini berkekuatan 48 megapixel dengan detail tajam."
+      },
+      "audio": {
+        "voice": "id-ID-GadisNeural",
+        "audioPath": null,
+        "durationInSeconds": 3.0,
+        "durationInFrames": 90
+      },
+      "transition": "fade"
     }
   ],
-  "totalDurationInFrames": 222
+  "totalDurationInFrames": 312
 }

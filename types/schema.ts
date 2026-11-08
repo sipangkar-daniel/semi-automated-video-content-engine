@@ -8,17 +8,29 @@ import { z } from "zod";
 // 1. Tipe Media per Scene
 export const MediaSchema = z.object({
   type: z.enum(["video", "image"]),
-  localPath: z.string().min(1, "Path media tidak boleh kosong"),
+  localPath: z.string().default(""),
   fit: z.enum(["cover", "contain"]).default("cover"),
+  // Background scope: apakah media ini berdiri sendiri atau mewarisi background sebelumnya
+  backgroundMode: z.enum(["standalone", "inherit_previous"]).default("standalone"),
 });
 
-// 2. Tipe Teks & Overlay Spek
+// 2. Tipe Layout & Tata Letak Teks/Media
+export const SceneLayoutSchema = z.object({
+  textPosition: z.enum(["top", "center", "bottom"]).default("bottom"),
+  mediaPresentation: z.enum(["fullscreen", "floating-card", "split"]).default("fullscreen"),
+});
+
+// 3. Tipe Teks & Overlay Spek
 export const SceneTextSchema = z.object({
-  highlightSpec: z.string().min(1, "Highlight spesifikasi harus diisi"),
+  highlightSpec: z.string().min(1, "Judul / highlight harus diisi"),
   subtitle: z.string().min(1, "Skrip narasi adegan harus diisi"),
+  customBadge: z.string().optional(), // Kustom label, misal: "INTRO", "PROS & CONS", "KESIMPULAN"
 });
 
-// 3. Tipe Audio & Voiceover Narasi
+// 4. Peran / Tipe Adegan
+export const SceneRoleSchema = z.enum(["intro", "feature", "comparison", "outro", "custom"]).default("feature");
+
+// 5. Tipe Audio & Voiceover Narasi
 export const SceneAudioSchema = z.object({
   voice: z.string().default("id-ID-GadisNeural"), // Default suara Edge-TTS Indonesia Wanita (Gadis)
   audioPath: z.string().nullable().default(null),
@@ -26,13 +38,18 @@ export const SceneAudioSchema = z.object({
   durationInFrames: z.number().int().positive().default(90), // default 3 detik @ 30 FPS
 });
 
-// 4. Tipe Transisi Antar Scene
+// 6. Tipe Transisi Antar Scene
 export const TransitionTypeSchema = z.enum(["fade", "slide-left", "zoom", "none"]).default("fade");
 
-// 5. Definisi Adegan Tunggal (Scene)
+// 7. Definisi Adegan Tunggal (Scene)
 export const SceneSchema = z.object({
   id: z.string(),
   order: z.number().int(),
+  role: SceneRoleSchema.default("feature"),
+  layout: SceneLayoutSchema.default({
+    textPosition: "bottom",
+    mediaPresentation: "fullscreen",
+  }),
   media: MediaSchema,
   text: SceneTextSchema,
   audio: SceneAudioSchema,
@@ -82,6 +99,8 @@ export const RenderJobStatusSchema = z.object({
 
 // TypeScript Types yang diinfer dari Zod
 export type Media = z.infer<typeof MediaSchema>;
+export type SceneLayout = z.infer<typeof SceneLayoutSchema>;
+export type SceneRole = z.infer<typeof SceneRoleSchema>;
 export type SceneText = z.infer<typeof SceneTextSchema>;
 export type SceneAudio = z.infer<typeof SceneAudioSchema>;
 export type TransitionType = z.infer<typeof TransitionTypeSchema>;

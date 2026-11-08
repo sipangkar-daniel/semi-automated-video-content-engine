@@ -23,14 +23,21 @@ const INITIAL_SCENES: Scene[] = [
   {
     id: "scene-1",
     order: 1,
+    role: "intro",
+    layout: {
+      textPosition: "top",
+      mediaPresentation: "fullscreen",
+    },
     media: {
       type: "image",
       localPath: "/uploads/sample_bodi.jpg",
       fit: "cover",
+      backgroundMode: "standalone",
     },
     text: {
-      highlightSpec: "Titanium Build - 187g",
-      subtitle: "Desain titanium barunya terasa sangat ringan dan kokoh di genggaman.",
+      highlightSpec: "Review iPhone 15 Pro",
+      subtitle: "Inilah smartphone flagship terbaru dengan material titanium super kokoh.",
+      customBadge: "INTRODUCE",
     },
     audio: {
       voice: "id-ID-GadisNeural",
@@ -43,10 +50,16 @@ const INITIAL_SCENES: Scene[] = [
   {
     id: "scene-2",
     order: 2,
+    role: "feature",
+    layout: {
+      textPosition: "bottom",
+      mediaPresentation: "fullscreen",
+    },
     media: {
       type: "image",
       localPath: "/uploads/sample_kamera.jpg",
       fit: "cover",
+      backgroundMode: "standalone",
     },
     text: {
       highlightSpec: "Kamera Utama 48MP OIS",
@@ -97,10 +110,16 @@ export default function VideoStudioDashboard() {
     const newScene: Scene = {
       id: `scene-${Date.now()}`,
       order: scenes.length + 1,
+      role: "feature",
+      layout: {
+        textPosition: "bottom",
+        mediaPresentation: "fullscreen",
+      },
       media: {
         type: "image",
         localPath: "",
         fit: "cover",
+        backgroundMode: "standalone",
       },
       text: {
         highlightSpec: "Spesifikasi Unggulan Baru",

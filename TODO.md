@@ -86,3 +86,15 @@
 - [x] **Task 5.5:** Buat Modal/Dialog Render di UI: menampilkan progress bar dinamis, estimasi waktu, dan tombol "Download MP4" / "Play Video".
 - [x] **Task 5.6:** Pengujian end-to-end (E2E): dari input form -> generate audio -> preview player -> export MP4 -> download.
 *Kriteria Selesai:* Sekali klik tombol "Render Video", sistem menghasilkan file video MP4 final di folder `public/renders/` dan siap diunduh. (SELESAI)
+
+---
+
+### Sprint 6: Dynamic Scene Architecture, Layouts & Shared Backgrounds
+**Tujuan:** Membuat alur video dinamis (ada Intro, Fitur, Outro), tata letak teks/media fleksibel (atas/tengah/bawah), dan background kontinu lintas adegan.
+- [x] **Task 6.1:** Perbarui kontrak data `types/schema.ts` (SSOT) dan cetak biru `ARCHITECTURE.md` dengan `role`, `layout`, dan `backgroundMode`.
+- [x] **Task 6.2:** Hapus kotak kaca kaku (`SpecOverlayCard.tsx`) & buat komponen tipografi teks bersih `TextOverlay.tsx`: mendukung dynamic role badge (INTRO, FITUR, OUTRO, kustom label) dan posisi dinamis (`top`, `center`, `bottom`).
+- [x] **Task 6.3:** Refactor `MediaBackground.tsx` & `SubtitleBar.tsx` agar jernih dan tidak menutupi visual gadget.
+- [x] **Task 6.4:** Refactor `SmartphoneSpecVideo.tsx`: implementasi layered architecture dengan shared continuous background antar adegan.
+- [x] **Task 6.5:** Perbarui UI `SceneCard.tsx`: tambahkan selector Peran Adegan (Intro/Fitur/Outro), Posisi Teks (Atas/Tengah/Bawah), dan opsi "Lanjut Latar Sebelumnya".
+- [x] **Task 6.6:** Pengujian kompilasi & render video dengan alur intro + fitur + background kontinu (`public/renders/test_dynamic_intro.mp4`).
+*Kriteria Selesai:* Video dapat dimulai dengan scene Intro (teks di atas), diikuti scene Fitur yang meneruskan background yang sama, dan scene Outro tanpa kotak kaca yang mengganggu. (SELESAI)

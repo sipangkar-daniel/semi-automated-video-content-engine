@@ -13,13 +13,25 @@ export const MediaBackground: React.FC<MediaBackgroundProps> = ({
 }) => {
   const frame = useCurrentFrame();
 
-  // Helper untuk resolve path lokal Remotion (staticFile jika path relatif atau /uploads)
+  if (!media.localPath || media.localPath.trim() === "") {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          background: "radial-gradient(circle at center, #1e293b 0%, #09090b 100%)",
+        }}
+      />
+    );
+  }
+
+  // Helper untuk resolve path lokal Remotion
   const resolvedSrc = media.localPath.startsWith("http")
     ? media.localPath
     : staticFile(media.localPath.replace(/^\//, ""));
 
-  // Efek subtle Ken Burns zoom (1x -> 1.08x) agar gambar statis tetap dinamis
-  const scale = interpolate(frame, [0, durationInFrames], [1, 1.08], {
+  // Efek subtle Ken Burns zoom (1x -> 1.05x)
+  const scale = interpolate(frame, [0, durationInFrames], [1, 1.05], {
     extrapolateRight: "clamp",
   });
 
@@ -56,13 +68,13 @@ export const MediaBackground: React.FC<MediaBackgroundProps> = ({
         />
       )}
 
-      {/* Vignette & Gradient Overlay di bagian bawah layar untuk kontras teks */}
+      {/* Vignette lembut di atas & bawah agar teks tetap kontras tanpa menutupi media */}
       <div
         style={{
           position: "absolute",
           inset: 0,
           background:
-            "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.05) 50%, rgba(9,9,11,0.85) 85%, rgba(9,9,11,0.98) 100%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.0) 70%, rgba(0,0,0,0.6) 100%)",
           pointerEvents: "none",
         }}
       />

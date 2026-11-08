@@ -94,10 +94,21 @@ Alur data video mengikuti State Machine linier:
 
 ---
 
-## 4. Standar Resolusi & Render
+## 4. Standar Resolusi & Dynamic Scene Architecture
 - **Canvas:** 1080 x 1920 (Vertical 9:16)
 - **FPS:** 30 FPS
 - **Codec:** H.264 (`--codec=h264`), Audio AAC
+- **Dynamic Roles & Badges:**
+  - `intro`: Pembuka/hook video (badge default: "HIGHLIGHT", judul besar, teks fokus perhatian).
+  - `feature`: Penjabaran spek/keunggulan (badge: "FITUR #N" atau kustom).
+  - `comparison`: Perbandingan / komparasi (badge: "VS").
+  - `outro`: Kesimpulan / rekomendasi beli (badge: "VERDICT" / "KESIMPULAN").
+  - `custom`: Bebas menentukan teks badge tanpa batasan.
+- **Dynamic Layout & Alignment:**
+  - `textPosition`: `"top"` (untuk intro/headline), `"center"` (untuk quote/punchline), `"bottom"` (default review gadget di atas subtitle).
+  - `mediaPresentation`: `"fullscreen"` (cover background), `"floating-card"` (kartu visual gadget melayang di tengah dengan efek bayangan dan latar blur), `"split"` (setengah layar).
+- **Persistent / Shared Backgrounds (`backgroundMode`):**
+  - `"standalone"`: Menggunakan media video/gambar unik untuk adegan tersebut.
+  - `"inherit_previous"`: Meneruskan latar belakang dari adegan sebelumnya secara seamless tanpa memotong atau me-restart pemutaran video background saat teks overlay berganti.
 - **Duration Formula:**  
-  `Total Project Frames = Sum(Scene[i].audio.durationInFrames) + PaddingFrames`
-- **Safe Zone:** Card spesifikasi berada di range Y 60% s/d 85% untuk menghindari tabrakan dengan UI TikTok/Shorts (tombol like, deskripsi akun).
+  `Total Project Frames = Sum(Scene[i].audio.durationInFrames) - OverlapFrames`

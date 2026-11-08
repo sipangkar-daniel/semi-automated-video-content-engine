@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateVoiceover, DEFAULT_VOICE } from "@/server/services/tts";
+import { generateVoiceover, generateBatchVoiceovers, DEFAULT_VOICE } from "@/server/services/tts";
 
 export const dynamic = "force-dynamic";
 
@@ -21,21 +21,25 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Skenario 2: Batch Scenes
+    // Skenario 2: Batch Scenes (dengan safe rate-limit delay)
     if (Array.isArray(body.scenes) && body.scenes.length > 0) {
-      const results = [];
-      for (const scene of body.scenes) {
-        if (!scene.subtitle || !scene.id) continue;
-        const res = await generateVoiceover({
-          text: scene.subtitle,
-          voice: scene.voice || body.defaultVoice || DEFAULT_VOICE,
-          sceneId: scene.id,
-        });
+      const itemsToProcess = body.scenes
+        .filter((s: any) => s.subtitle && s.id)
+        .map((s: any) => ({
+          id: s.id,
+          subtitle: s.subtitle,
+          voice: s.voice || body.defaultVoice || DEFAULT_VOICE,
+        }));
+
+      const batchResultsMap = await generateBatchVoiceovers(itemsToProcess);
+
+      const results: any[] = [];
+      batchResultsMap.forEach((data, sceneId) => {
         results.push({
-          sceneId: scene.id,
-          ...res,
+          sceneId,
+          ...data,
         });
-      }
+      });
 
       return NextResponse.json({
         success: true,
@@ -44,7 +48,10 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { success: false, error: "Format request tidak valid. Berikan 'scenes' array atau 'sceneId' & 'subtitle'." },
+      {
+        success: false,
+        error: "Format request tidak valid. Berikan 'scenes' array atau 'sceneId' & 'subtitle'.",
+      },
       { status: 400 }
     );
   } catch (error: any) {
